@@ -3,6 +3,15 @@ git_source(:github) { |repo| "https://github.com/#{repo}.git" }
 
 ruby '2.5.0'
 
+# NUser authentication gem clearance
+
+gem "clearance"
+# gem for user management, another gem for it is Devise
+# I added this gem
+
+gem 'figaro'
+##not exposure information
+
 # Bundle edge Rails instead: gem 'rails', github: 'rails/rails'
 gem 'rails', '~> 5.2.2'
 # Use postgresql as the database for Active Record
