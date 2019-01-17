@@ -1,0 +1,44 @@
+<% if signed_in? %>
+<h3>profile <%=current_user.email%></h3>
+<% else %>
+<h3>Hi</h3>
+<%end%>
+
+<!-- @user.avatar.thumb.url give me small picture, i have set up in my AvatarUploader velikost -->
+<!-- @user.avatar.url it will be full size picture -->
+<!-- oba obrazky najdu v public/uploads/user/avatar/:user.id -->
+<% if @user.avatar.thumb.url %>
+	<%= image_tag @user.avatar.thumb.url%>
+<% end %>
+<!-- if I have not @user.avatar in if it will error -->
+
+
+<%= link_to "Edit user", edit_user_path(@user)%>
+
+<h4>Your reservations: </h4>
+<!-- tato stranka je user#show variable has to be in user controler def show -->
+<% @reservations.each do |res| %>
+	<% if res.listing.initial_picture.thumb.url %>
+	<%= image_tag res.listing.initial_picture.thumb.url %>
+	<% end %>
+	<div><%= res.listing.title%></br>
+	city:<%= res.city %></br>
+	arrival: <%= res.arrival %></br>
+	departure: <%= res.departure %></div>
+	<!-- je to nested, proto potrebuji dva"parametry" res.listing(_id) a res(.id) -->
+	<div><%= link_to "Cancel", listing_reservation_path(res.listing_id, res.id), method: :delete %></div>
+	<%= link_to "Make Payment", payment_new_path %>
+	</br>
+	<% end %>
+
+
+<% @listings.each do |listing|%>
+	<h2><%= link_to listing.title, listing_path(listing)%></h2>
+	<% if listing.initial_picture.thumb.url %>
+		<%= image_tag listing.initial_picture.thumb.url %>
+		<% else %>
+		 <img class="card-img-top w-25 p-3 h-100 d-inline-block" src="https://c8.alamy.com/comp/C5R7DX/a-mountaineers-tent-on-the-edge-of-a-high-alpine-mountain-C5R7DX.jpg" alt="No picture">
+	<% end %>
+<%end%>
+
+<div class="paginate_index"><%= will_paginate @listings %></div>

@@ -10,10 +10,45 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2019_01_10_060008) do
+ActiveRecord::Schema.define(version: 2019_01_15_110558) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
+
+  create_table "authentications", force: :cascade do |t|
+    t.string "uid"
+    t.string "token"
+    t.string "provider"
+    t.bigint "user_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["user_id"], name: "index_authentications_on_user_id"
+  end
+
+  create_table "listings", force: :cascade do |t|
+    t.bigint "user_id", null: false
+    t.string "title"
+    t.string "text"
+    t.boolean "pets"
+    t.boolean "verified", default: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.string "initial_picture"
+    t.index ["user_id"], name: "index_listings_on_user_id"
+  end
+
+  create_table "reservations", force: :cascade do |t|
+    t.bigint "user_id"
+    t.bigint "listing_id"
+    t.string "country"
+    t.string "city"
+    t.date "arrival"
+    t.date "departure"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["listing_id"], name: "index_reservations_on_listing_id"
+    t.index ["user_id"], name: "index_reservations_on_user_id"
+  end
 
   create_table "users", force: :cascade do |t|
     t.datetime "created_at", null: false
@@ -24,8 +59,13 @@ ActiveRecord::Schema.define(version: 2019_01_10_060008) do
     t.string "remember_token", limit: 128, null: false
     t.string "first_name"
     t.string "last_name"
+    t.boolean "admin", default: false
+    t.boolean "host", default: false
+    t.boolean "user", default: true
+    t.string "avatar"
     t.index ["email"], name: "index_users_on_email"
     t.index ["remember_token"], name: "index_users_on_remember_token"
   end
 
+  add_foreign_key "authentications", "users"
 end

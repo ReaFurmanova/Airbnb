@@ -1,0 +1,11 @@
+ <h1>Edit listing</h1>
+ <!-- multipart   true - pro obrazky-->
+<%= simple_form_for @listing, :html => {:multipart => true} do |f|%>
+
+<%= f.input :title, label: "Listing title" %>
+<%= f.input :text %>
+<%= f.input :pets %>
+<%= f.input :verified %>
+<%= f.file_field :initial_picture, label: "Initial" %>
+<%= f.button :submit %>
+<% end %> 

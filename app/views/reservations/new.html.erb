@@ -1,0 +1,6 @@
+<%= simple_form_for @reservation do |r|%>
+<%= r.date_field :arrival, :order => [:day, :month, :year]%>
+<%= r.date_field :departure, :order => [:day, :month, :year] %>
+<%= r.submit :submit %>
+<% end %>
+

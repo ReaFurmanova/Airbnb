@@ -1,0 +1,7 @@
+<%= simple_form_for @listing do |f|%>
+<%= f.input :title, label: "Listing title" %>
+<%= f.input :text %>
+<%= f.input :pets %>
+<%= f.file_field :initial_picture, label: "Initial" %>
+<%= f.submit :submit %>
+<% end %>

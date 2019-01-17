@@ -1,0 +1,41 @@
+<h1><%= @listing.title%></h1>
+<p><%= @listing.text%></p>
+<p>Pets: <%= @listing.pets%></p>
+<p>Verification: <%= @listing.verified%></p>
+
+<% list_rev = Listing.all.order(creater_at: :desc) %>
+
+
+<% if signed_in? %>
+	<%= link_to "Back", user_path%>
+	<% if @listing.user_id == current_user.id || current_user.admin == true %>
+		<%= link_to "Edit listing", edit_listing_path(@listing)%>
+		<%= link_to "Delete listing", listing_path(@listing), method: :delete, data: {confirm: "Are you sure?"}%>	
+	<% end %>
+	<% if current_user.admin == true %>
+	<%= link_to "Verify listing", verify_listing_path(@listing) %>
+	<% end %>
+<% end %>
+<% if @listing.initial_picture.thumb.url %>
+<%= image_tag @listing.initial_picture.thumb.url %>
+<% end %>
+
+<h4>Make a reservation</h4>
+<!-- another way how to do it -->
+<%#= form_with url: listing_reservations_path(@listing), scope: "reservation" do |r|%>
+<!-- [@listing, Reservation.new] tohle me neodkazuje do controleru, jen jake modely tma vstupuji, dma tam Reservation.new protoze zadny tam ted nemam teprve se vytvori -->
+<%= form_with model: [@listing, Reservation.new] do |r|%>
+<%= r.text_field :city, label: "city", placeholder: "city" %>
+<%= r.text_field :country, label: "coutry", placeholder: "country" %>
+<%= r.date_field :arrival, :order => [:day, :month, :year]%>
+<%= r.date_field :departure, :order => [:day, :month, :year] %>
+<%= r.submit :submit %>
+<% end %>
+
+<h4>Reservation for this accomodation:</h4>
+<% @reservations.each do |res| %>
+	<div><%= res.user.first_name%></br>
+	city:<%= res.city %></br>
+	arrival: <%= res.arrival %></br>
+	departure: <%= res.departure %></div>
+<% end %>

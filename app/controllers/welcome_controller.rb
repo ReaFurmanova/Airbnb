@@ -7,5 +7,4 @@ class WelcomeController < ApplicationController
 		# the ffile is in views, file welcome
 		# index.html.erb has to be with html
 	end
-	
 end
