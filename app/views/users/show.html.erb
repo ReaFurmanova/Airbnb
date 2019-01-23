@@ -1,0 +1,71 @@
+<div class="container">
+	<% if signed_in? %>
+		<h3>profile <%=current_user.email%></h3>
+	<% else %>
+		<h3>Hi</h3>
+	<%end%>
+
+	<!-- @user.avatar.thumb.url give me small picture, i have set up in my AvatarUploader velikost -->
+	<!-- @user.avatar.url it will be full size picture -->
+	<!-- oba obrazky najdu v public/uploads/user/avatar/:user.id -->
+	<% if @user.avatar.thumb.url %>
+		<%= image_tag @user.avatar.thumb.url%>
+	<% end %>
+	<!-- if I have not @user.avatar in if it will error -->
+
+
+	<%= link_to "Edit user", edit_user_path(@user)%>
+
+	<%= form_with(url: listings_path, method: :get, local: true) do |f|%>
+		<%= f.label(:city, "Search for:") %>
+		<%= f.text_field :city, placeholder: "City"%>
+		<%#= f.number_field :price, placeholder: "Price"%>
+		<%= f.number_field :min, placeholder: "Min"%>
+		<%= f.number_field :max, placeholder: "Max"%>
+		<%= f.label(:pool, "Pool") %>
+		<%= f.check_box :pool %>
+		<%= f.label(:pets, "Pets") %>
+		<%= f.check_box :pets %>
+		<%= f.select(:home_type, raw('<option></option><option value="Cave">Cave</option><option value="Tent">Tent</option><option value="Car">Car</option><option value="Mars">Mars</option>')) %>
+		<%= f.submit("Search", name: nil) %>
+	<%end%>
+
+	
+	<h4 class="col-12">Your reservations</h4>
+		<!-- tato stranka je user#show variable has to be in user controler def show -->
+	
+		<% @reservations.each do |res| %>
+		<div class="d-flex flex-column align-items-center text-center col-sm-12 col-md-6 col-lg-4">
+			<div><%= res.listing.title%></br>
+			PRICE: <%= res.amount %></br>
+			arrival: <%= res.arrival %></br>
+			departure: <%= res.departure %></div>
+			<!-- je to nested, proto potrebuji dva"parametry" res.listing(_id) a res(.id) -->
+			<div><%= link_to "Cancel", listing_reservation_path(res.listing_id, res.id), method: :delete %></div>
+
+			<% if res.state_payment == true %>
+				<h3><%= "PAID" %></h3>
+			<%else%>
+				<!-- tady presmerovavam na payment, ale stale nevim cislo rezervace, proto ho potrebuji zadat do parametru, jde to do payment.new.html.erb -->
+				<%= link_to "Make Payment", reservation_new_path(reservation_id: res.id) %>
+			<% end %>
+			</div>
+		<% end %>
+	
+	<h4 class="col-12">Listings</h4>
+	<% @listings.each do |listing|%>
+			<div class="card border-0 col-12 col-sm-6 col-md-4 col-lg-3" style="width: 33%;">
+				<h2 class="center"><%= link_to listing.title, listing_path(listing)%></h2>
+				<% if listing.images.empty? %>
+						<img class="card-img-top d-inline-block" src="https://c8.alamy.com/comp/C5R7DX/a-mountaineers-tent-on-the-edge-of-a-high-alpine-mountain-C5R7DX.jpg">
+				<% else %>
+					<%= image_tag listing.images[0].medium.url %>
+				<% end %>
+			</div>
+		<!-- select button smaz jen pro admina -->
+	<%end%>
+</div>
+
+<div class="paginate_index"><%= will_paginate @listings %></div>
+
+

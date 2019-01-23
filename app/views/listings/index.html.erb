@@ -1,0 +1,11 @@
+<h1>Hello</h1>
+<button><%=link_to "Back", root_path%></button>
+<% @listings.each do |listing|%>
+
+	<h2><%= link_to listing.title, listing_path(listing)%></h2>
+		<% if listing.images.empty? %>
+			<img class="card-img-top w-25 p-3 h-100 d-inline-block" src="https://c8.alamy.com/comp/C5R7DX/a-mountaineers-tent-on-the-edge-of-a-high-alpine-mountain-C5R7DX.jpg">
+		<% else %>
+			<%= image_tag listing.images[0].medium.url %>
+		<% end %>
+	<% end %>

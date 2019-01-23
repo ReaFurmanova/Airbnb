@@ -1,0 +1,7 @@
+<h1>Edit user</h1>
+
+<%= simple_form_for @user, :html => {:multipart => true} do |f|%>
+<%= f.input :email %>
+<%= f.input :avatar, label: "Profile picture" %>
+<%= f.button :submit %>
+<% end %> 

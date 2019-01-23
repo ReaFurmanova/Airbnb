@@ -1,0 +1,20 @@
+<%= simple_form_for @listing do |f|%>
+<%= f.input :title %>
+<%= f.input :text %>
+<p>Country</p>
+<%= f.select :country, options_for_select(Listing.country_list) %>
+<%= f.input :city %>
+
+<b>Home type</b><br />
+<%= f.radio_button :home_type, :Tent %> Tent <br />
+<%= f.radio_button :home_type, :Cave %> Cave <br />
+<%= f.radio_button :home_type, :Mars %> Mars <br />
+<%= f.radio_button :home_type, :Car %> Car <br />
+
+<%#= f.input :home_type %>
+<%= f.input :price %>
+<%= f.input :pool %>
+<%= f.input :pets %>
+<%= f.file_field :images %>
+<%= f.submit :submit %>
+<% end %>

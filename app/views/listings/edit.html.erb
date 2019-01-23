@@ -1,0 +1,26 @@
+ <h1>Edit listing</h1>
+ <!-- multipart   true - pro obrazky-->
+<%= simple_form_for @listing do |f|%>
+<% if current_user.admin == true %>
+<%= f.input :verified %>
+<% end %>
+<%= f.input :title, label: "Listing title" %>
+<%= f.input :text %>
+<p>Country</p>
+<%= f.select :country, options_for_select(Listing.country_list, @listing.country) %>
+<!-- @listing.country na konci, pri edittu vidim puvodne vybranou zemi -->
+<%= f.input :city %>
+<b>Home type</b><br />
+<%= f.radio_button :home_type, :Tent %> Tent <br />
+<%= f.radio_button :home_type, :Cave %> Cave <br />
+<%= f.radio_button :home_type, :Mars %> Mars <br />
+<%= f.radio_button :home_type, :Car %> Car <br />
+<%#= f.input :home_type %>
+<%= f.input :price %>
+<%= f.input :pool %>
+<%= f.input :pets %>
+<%= f.file_field :images, :multiple => true %>
+<!-- DODELEJ FUNKCI KDYZ KLIKNE JEDNO FOTO OBJEVI SE MOZNOST PRIDAT DALSI -->
+
+<%= f.button :submit %>
+<% end %> 

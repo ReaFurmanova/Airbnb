@@ -1,15 +1,54 @@
 <!DOCTYPE html>
 <html>
-  <head>
-    <title>Airbnb</title>
-    <%= csrf_meta_tags %>
-    <%= csp_meta_tag %>
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <%= stylesheet_link_tag 'application' %>
+    <%= javascript_include_tag 'application' %>
+    <%= csrf_meta_tag %>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/css/bootstrap.min.css" integrity="sha384-GJzZqFGwb1QTTN6wy59ffF1BuGJpLSa9DkKMp0DgiMDm4iYMj70gZWKYbI706tWS" crossorigin="anonymous">
 
-    <%= stylesheet_link_tag    'application', media: 'all', 'data-turbolinks-track': 'reload' %>
-    <%= javascript_include_tag 'application', 'data-turbolinks-track': 'reload' %>
-  </head>
+</head>
+<body>
+  <nav class="navbar bg-info ">
+     <div class="navbar-header">
+        <%=link_to "Homepage", root_path, class: "navbar-brand"%>
+      </div>
 
-  <body>
+      <ul class="nav navbar-nav ">
+        <% if signed_in? %>
+          <li><%= link_to "Sign out", sign_out_path, method: :delete%></li>
+          <li><%= link_to "Add listing", new_listing_path%></li>
+
+         
+        <% else %>
+          <li><%= link_to "Sign in", sign_in_path %></li>
+          <li><%= link_to "Sign up", sign_up_path %></li>
+        <%end%>
+      </ul>
+  </nav>
+
+    <!-- create a link with value Sign in -->
+      
+      <!-- (".sign_in") referuje mi k tomu co se zobrazi na strance -->
+      <!-- Also is possible to write just  "Sign Up" -->
+      <!-- this button is appear on my page -->
+
+      <!-- just for case - show Hello link on sign in page -->
+     <!--  <%= link_to "Hello", sign_in_path %> -->
+     <!-- path is a method provides by rails -->
+
+    <div id="flash">
+      <% flash.each do |key, value| -%>
+        <div id="flash_<%= key %>"><%=h value %></div>
+      <% end %>
+    </div>
+
     <%= yield %>
-  </body>
+
+    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js" integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49" crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js" integrity="sha384-ChfqqxuZUCnJSK3+MXmPNIyE6ZbWh2IMqE241rYiqJxyMiZ6OW/JmZQ5stwEULTy" crossorigin="anonymous"></script>
+</body>
 </html>
