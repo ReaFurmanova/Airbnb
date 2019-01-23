@@ -57,7 +57,7 @@ ActiveRecord::Base.transaction do
     listing['user_id'] = uids.sample
     ####this one is working for picture
     x = Listing.new(listing)
-    x.remote_photos_urls = [Faker::Avatar.image]
+    x.remote_images_urls = [Faker::Avatar.image]
     x.save
   end
 
