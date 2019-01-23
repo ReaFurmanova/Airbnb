@@ -16,7 +16,7 @@ class ReservationsController < ApplicationController
 		#### musim pridat tyto dva radky, jinak budu mit chybu, ze program nevi, what is user id a listing id
 		#### I have curent_user.id but there is nothing as current_listing.id(pokud si to nenadefinuji, neni tam ted)
 		today = Date.today
-		if reservation.arrival >= today			
+		if reservation.arrival >= today
 			# @listing = Listing.find(params[:listing_id])
 			
 			reservation.user_id = current_user.id
