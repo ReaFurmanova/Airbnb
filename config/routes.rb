@@ -1,6 +1,6 @@
 Rails.application.routes.draw do
 
-root 'welcome#index'
+root 'users#show'
 # go to users controllers and looks for method show
 get "/auth/:provider/callback" => "sessions#create_from_omniauth"
 # delete "/sign_out" => "sessions#create_from_omniauth#destroy", as: "sign_out"
