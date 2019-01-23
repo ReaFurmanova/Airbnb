@@ -59,10 +59,9 @@ ActiveRecord::Base.transaction do
     x = Listing.new(listing)
     x.remote_photos_urls = [Faker::Avatar.image]
     x.save
-    end
+  end
 
     Listing.create(listing)
     # listing = Listing.new(listing)
     # listing.save
-  end
 end
