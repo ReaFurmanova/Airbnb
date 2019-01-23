@@ -1,7 +1,14 @@
-<h1><%= @listing.title%></h1>
-<p><%= @listing.text%></p>
-<p>Pets: <%= @listing.pets%></p>
-<p>Verification: <%= @listing.verified%></p>
+
+	<h1><%= @listing.title%></h1>
+	<p><%= @listing.text%></p>
+	<p>Verification: <%= @listing.verified%></p>
+	<p>PRICE <%= @listing.price %></p>
+	<p>Country: <%= @listing.country%></p>
+	<p>City: <%= @listing.city%></p>
+	<p>Home type: <%= @listing.home_type %></p>
+	<p>Pool: <%= @listing.pool%></p>
+	<p>Pets: <%= @listing.pets%></p>
+
 
 <% list_rev = Listing.all.order(creater_at: :desc) %>
 
@@ -14,28 +21,49 @@
 	<% end %>
 	<% if current_user.admin == true %>
 	<%= link_to "Verify listing", verify_listing_path(@listing) %>
+	
 	<% end %>
 <% end %>
-<% if @listing.initial_picture.thumb.url %>
-<%= image_tag @listing.initial_picture.thumb.url %>
-<% end %>
+<div class="container">
+<% @listing.images.each do |image| %>
+	<div class = "d-flex">
+		<%= image_tag image.medium.url %>
+	</div>
+<!-- delete picture  loop in pictures and delete, delete_at[x]-->
+<%end %>
+</div>
 
 <h4>Make a reservation</h4>
 <!-- another way how to do it -->
 <%#= form_with url: listing_reservations_path(@listing), scope: "reservation" do |r|%>
 <!-- [@listing, Reservation.new] tohle me neodkazuje do controleru, jen jake modely tma vstupuji, dma tam Reservation.new protoze zadny tam ted nemam teprve se vytvori -->
-<%= form_with model: [@listing, Reservation.new] do |r|%>
-<%= r.text_field :city, label: "city", placeholder: "city" %>
-<%= r.text_field :country, label: "coutry", placeholder: "country" %>
+
+<!-- POUZIJU AJAX, BEZ AJAXU MUSIM AKTUALIZOVAT STRANU, ABY SE MI UKAZALA REZERVACE -->
+<!-- pridam remote: true, protoze default je local:true -->
+<%= form_with model: [@listing, Reservation.new], remote: true do |r|%>
 <%= r.date_field :arrival, :order => [:day, :month, :year]%>
 <%= r.date_field :departure, :order => [:day, :month, :year] %>
 <%= r.submit :submit %>
+
 <% end %>
 
+
 <h4>Reservation for this accomodation:</h4>
-<% @reservations.each do |res| %>
-	<div><%= res.user.first_name%></br>
-	city:<%= res.city %></br>
-	arrival: <%= res.arrival %></br>
-	departure: <%= res.departure %></div>
-<% end %>
+<!-- je dulezite kde je div tu cast mi ajax bude nahrazovat, nepotrebuji reender listing, protoze to pak bude zdvojene -->
+<div id='listings'>
+	<% @reservations.each do |res| %>
+		<div class="direction flex-column-reverse d-inline-flex p-2 border border-info ">
+		customer: <%= res.user.first_name%></br>
+		your host: <%= res.listing.user.first_name %></br>
+		PRICE: <%= res.amount %></br>
+		arrival: <%= res.arrival %></br>
+		departure: <%= res.departure %></div>
+	<% end %>
+</div>
+
+
+
+
+
+
+

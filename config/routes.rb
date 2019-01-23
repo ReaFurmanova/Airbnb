@@ -10,14 +10,23 @@ get '/listings/:id/verify' => "listings#verify", as: 'verify_listing'
 ####don't need only: because I have for each function is need it
 #### kdyz je to v do, je to nested
 get '/listings/:id/reservation' => "listings#reservation", as: 'reservation_listing'
-resources :listings, except: [:index] do
+
+resources :listings do
   resources :reservations, only: [:create, :new, :edit, :update, :destroy]
+end
+
+resources :reservations do
+    get "payments/new", to: "payments#new", as: "new"
+    post 'payments/checkout'
 end
 
 
 ####payment
-  get 'payment/new'
-  post 'payment/checkout'
+
+
+  # "listings/:listing_id/reservations/:reservation_id/payments/checkout"
+  #   "listings/:listing_id/reservations/:reservation_id/payments/new"
+
 
 ####predtim jsem to mela a to neni nested
 ####resources :reservation, controller: "listing/reservation", only: [....]

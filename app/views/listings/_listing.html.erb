@@ -1,0 +1,12 @@
+<!-- @reservations jsem ziskala v reservation controleer, funkce create -->
+<!-- potrebovala jsem novy list kde napisu pouze data co se znovu nacitaji pri ajaxu -->
+	
+	<% @reservations.each do |res| %>
+		<div class="d-inline-flex p-2 border border-info ">
+			customer: <%= res.user.first_name%></br>
+			your host: <%= res.listing.user.first_name %></br>
+			PRICE: <%= res.listing.price %></br>
+			arrival: <%= res.arrival %></br>
+			departure: <%= res.departure %></div>
+	<% end %>
+	Booked

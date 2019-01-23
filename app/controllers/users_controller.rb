@@ -11,6 +11,7 @@ class UsersController < Clearance::UsersController
 		####find najde jedno, where v query najde vice zaznamu
 		####kdyz pouziju current_user.id a nekod jiny pujde na stranku uvidi svoje rezervace
 		@reservations = Reservation.where(user_id: @user.id)
+
 	end
 	
 	def create

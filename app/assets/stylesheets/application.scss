@@ -17,3 +17,21 @@
  /*.avatar {
  	height: 44px;
  }*/
+.container{
+	display:flex;
+	flex-wrap: wrap;
+	justify-content: space-around;
+	align-items: stretch;
+	background-color:snow;
+}
+.card{
+	margin: 10px;
+	border: none;
+}
+.center{
+	text-align: center;
+}
+.navbar{
+	display: inline-block;
+}
+

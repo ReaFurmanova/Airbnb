@@ -18,7 +18,7 @@ gem 'omniauth'
 gem 'carrierwave', '~> 1.0'
 gem 'fog'
 gem "mini_magick"
-
+gem 'foreman'
 gem 'will_paginate', '~> 3.1.0'
 gem 'simple_form', '~> 4.1'
 gem 'bootstrap', '~> 4.2.1'
@@ -29,7 +29,8 @@ gem 'kaminari'
 gem 'faker'
 gem 'will_paginate', '~> 3.1.0'
 gem 'rolify'
-
+gem "letter_opener", :group => :development
+gem 'sidekiq'
 
 # Bundle edge Rails instead: gem 'rails', github: 'rails/rails'
 gem 'rails', '~> 5.2.2'
