@@ -3,7 +3,6 @@ class ChangeColumns < ActiveRecord::Migration[5.2]
   	remove_column :reservations, :country
   	remove_column :reservations, :city
   	add_column :reservations, :state_payment, :boolean, default: false
-  	remove_column :listings, :initial_picture
   	add_column :listings, :images, :json
   	add_column :listings, :city, :string
   	add_column :listings, :country, :string
